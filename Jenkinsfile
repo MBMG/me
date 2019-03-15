@@ -14,6 +14,17 @@ pipeline {
     stage('test') {
       steps {
         sh 'npm test'
+        emailext(subject: 'Prueba jenkins', body: 'Envio desde Jenkins', attachLog: true, to: 'blancamaria')
+      }
+    }
+    stage('Aprove') {
+      steps {
+        input(message: 'Aprobar?', submitter: 'blancamaria')
+      }
+    }
+    stage('Deploy') {
+      steps {
+        emailext(subject: 'Prueba correo 2', body: 'Otra prueba desde Jenkins, pase a PROD', attachLog: true, to: 'mariablanca')
       }
     }
   }
